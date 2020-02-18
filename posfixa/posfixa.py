@@ -19,21 +19,29 @@ def infixaToPosfixa(expressao):
             if len(pilha) == 0:
                 pilha.append(i)
             elif len(pilha) > 0:
-                topo_pilha = pilha[-1]
-                if prioridade_operadores(i, topo_pilha):
+                top = pilha[-1]
+                if prioridade_operadores(i, top):
                     pilha.append(i)
                 else:
                     while len(pilha) > 0:
-                        topo_pilha = pilha.pop()
-                        saida.append(topo_pilha)
+                        top = pilha.pop()
+                        saida.append(top)
                     pilha.append(i)
 
-    #
+    # -------------------------------
     while len(pilha) > 0:
-        topo_pilha = pilha.pop()
-        saida.append(topo_pilha)
+        top = pilha.pop()
+        saida.append(top)
 
     return saida
+
+def verificaResultado(resultado, saida):
+    expressao_ok = True
+    for i in range(len(resultado)):
+        if resultado[i] != saida [i]:
+            expressao_ok = False
+            break;
+    return expressao_ok
 
 def prioridade_operadores(c, t):
     pc = -1
@@ -75,4 +83,6 @@ expressao = [-5.0, '-', 2.0, '*', 3.0, '+', 14.0, '/', -7.0]
 saida = [-5.0, 2.0, 3.0, '*', '-', 14.0, -7.0, '/', '+']
 imprime_cabecalho()
 print('Expressao de Entrada = {}'.format(expressao))
-print('Expressao de Saida = {}'.format(infixaToPosfixa(expressao)))
+resultado = infixaToPosfixa(expressao)
+print('Expressao de Saida = {}'.format(resultado))
+print('Resultado Passou = {} '.format(verificaResultado(resultado, saida)))
